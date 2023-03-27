@@ -13,7 +13,7 @@
 </template>
 <script>
 import { total, currentPage } from '../use/data'
-import { search } from '../use/method'
+import { search } from '../use/request'
 let _this
 const dataReturn = { // dataReturn 用于返回 data 页面数据双向绑定
   total, // 总条数
