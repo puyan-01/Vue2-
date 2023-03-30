@@ -3,7 +3,6 @@
     <el-pagination :page-sizes="[10, 20, 30, 40]"
                    :page-size="10"
                    background
-                   @current-change="handleCurrentChange"
                    @size-change="handleSizeChange"
                    :current-page.sync="currentPage.value"
                    :total="total.value"
@@ -13,7 +12,7 @@
 </template>
 <script>
 import { total, currentPage } from '../use/data'
-import { search } from '../use/request'
+import { search } from '../use/method'
 let _this
 const dataReturn = { // dataReturn 用于返回 data 页面数据双向绑定
   total, // 总条数
@@ -29,12 +28,6 @@ const method = (_this) => {
     console.log(`每页 ${val} 条`)
     currentPage.value = 1
 
-  }
-
-  // 点击页数
-  _this.handleCurrentChange = () => {
-
-    // 调用接口
     search()
 
   }
