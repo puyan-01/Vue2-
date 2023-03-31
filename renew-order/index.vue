@@ -1,10 +1,9 @@
 ﻿<template>
   <div class="app-container order_manage">
-
     <Search />
     <Table />
     <Pagination />
-    <Check />
+    <!-- <Check /> -->
   </div>
 </template>
 
@@ -15,8 +14,12 @@ import Search from './components/Search.vue'
 import Table from './components/Table.vue'
 
 export default {
-  components: { Search, Table, Pagination, Check },
+  components: {
+    Search,
+    Table,
+    Pagination,
+    // Check,
+  },
 }
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

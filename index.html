@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>HTML 导入 JavaScript 方法</h1>
+  </body>
+  <script>
+    // 封装一个响应式对象
+    const reactive = (obj) => {
+      console.log(`varName ====>`, obj );
+      
+      if (typeof obj !== "object" || obj === null) {
+        return obj;
+      }
+      // 判断 obj 是否已经是响应式对象，如果是则直接返回
+      if (obj["__v_isReactive"]) {
+        return obj;
+      }
+      const proxy = new Proxy(obj, {
+        get(target, key) {
+          return Reflect.get(target, key);
+        },
+        set(target, key, val) {
+          const result = Reflect.set(target, key, val);
+          return result;
+        },
+      });
+      console.log(`proxy ====>`, proxy );
+      
+    };
+
+    const varName = reactive({ name: "zhangsan" });
+    console.log(`转换后 ====>`, varName);
+  </script>
+</html>
