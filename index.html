@@ -8,12 +8,11 @@
   </head>
   <body>
     <h1>HTML 导入 JavaScript 方法</h1>
+    <div id="app"></div>
   </body>
   <script>
     // 封装一个响应式对象
     const reactive = (obj) => {
-      console.log(`varName ====>`, obj );
-      
       if (typeof obj !== "object" || obj === null) {
         return obj;
       }
@@ -21,7 +20,7 @@
       if (obj["__v_isReactive"]) {
         return obj;
       }
-      const proxy = new Proxy(obj, {
+      const observed = new Proxy(obj, {
         get(target, key) {
           return Reflect.get(target, key);
         },
@@ -30,11 +29,37 @@
           return result;
         },
       });
-      console.log(`proxy ====>`, proxy );
-      
+
+      // 给 observed 对象打一个标记，表示它已经是响应式对象
+      observed["__v_isReactive"] = true;
+
+      // 返回 observed 响应式对象
+      return observed;
     };
 
-    const varName = reactive({ name: "zhangsan" });
-    console.log(`转换后 ====>`, varName);
+    const ref = (value) => {
+      const obj = {
+        value,
+      };
+
+      // 设置 obj.value 属性为响应式对象
+      // 这里使用了 Vue 3 的 reactive 函数
+      // reactive 函数会将普通对象转换为响应式对象
+      obj.value = reactive({
+        value,
+      }).value;
+
+      // 返回一个 ref 对象，该对象包含了一个 value 属性
+      // 该 value 属性是一个响应式对象
+      return obj;
+    };
+
+    const varName = ref("张三");
+    const app = document.getElementById("app");
+    app.innerHTML = `<p>${varName.value}</p>`;
+    setTimeout(() => {
+      varName.value = "林四";
+      console.log(`varName ====>`, varName.value);
+    }, 1000);
   </script>
 </html>
