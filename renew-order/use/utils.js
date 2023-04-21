@@ -1,7 +1,7 @@
 const bucket = new Map();
 
 // 封装一个响应式对象
-const reactive = (obj ) => {
+const reactive = (obj) => {
   if (typeof obj !== "object" || obj === null) {
     return obj;
   }
@@ -9,18 +9,16 @@ const reactive = (obj ) => {
   if (obj["__v_isReactive"]) {
     return obj;
   }
-  const  proxy = new Proxy(obj, {
+  const proxy = new Proxy(obj, {
     get(target, key) {
       return Reflect.get(target, key);
     },
     set(target, key, val) {
       const result = Reflect.set(target, key, val);
       return result;
-    }
+    },
   });
-  
 };
-
 
 const ref = (value = null, method = false, funName) => {
   const proxy = new Proxy(

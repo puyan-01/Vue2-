@@ -13,7 +13,7 @@ import { getRenewalRecordApi } from "@/api/operator/renewOrder.js";
 
 // 调用接口获取数据
 const search = async () => {
-  loading.value = true;
+  loading.value = true; // 加载中
 
   const skipCount = pageSize.value * (currentPage.value - 1);
   const maxResultCount = pageSize.value;
